@@ -3,6 +3,9 @@ import { User } from './user.interface';
 
 @Injectable()
 export class UserService {
+  find(): User | { message: String; } {
+    throw new Error('Method not implemented.');
+  }
     private users :User[] = [{id:1,name: 'Alie', email: 'alice@example.com'},
         {id:2, name: 'Alice12', email: 'alice12@example.com'}];
 
@@ -11,6 +14,8 @@ export class UserService {
         getUser(id: number): User | {message: String} {
             return this.users.find((user) => user.id === id) || {message: "not found"};
         }
+
+    
 
         createUser(user:{name:string,email:string }): User{
             const newUser: User = {id: this.users.length +1, ...user};
