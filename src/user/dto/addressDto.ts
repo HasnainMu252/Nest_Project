@@ -25,6 +25,6 @@ export class CreateUserDto{
 
 
     @IsOptional()
-    @Type(()=> AddressDto)
+    @Type(()=> AddressDto)  // we use decorator nested object
     address?: AddressDto
 }

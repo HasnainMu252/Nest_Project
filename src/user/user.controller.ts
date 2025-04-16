@@ -11,31 +11,40 @@ export class UserController {
   users: any;
   constructor(private readonly userService: UserService) { }
 
+  // @Get(':id')
+  // getUser(@Param('id') id: number): User | { message: String } {
+  //   return this.userService.getUser(Number(id));
+  // }
+  
   @Get(':id')
-  getUser(@Param('id') id: number): User | { message: String } {
-    return this.userService.getUser(Number(id));
+  getUser(@Param('id') id: number): UserResponseDto | { message: String } {
+    const getUser =  this.userService.getUser(Number(id));
+    return new UserResponseDto(getUser)
   }
 
-  @Post()
-  createUser(@Body() userdto: CreateUserDto): User {
-    return this.userService.createUser(userdto);
-
-  }
   // @Post()
   // createUser(@Body() userdto: CreateUserDto): User {
-  //     const newUser =  this.userService.createUser(userdto);
-  //     return new UserResponseDto(newUser);
+  //   return this.userService.createUser(userdto);
+
   // }
+  @Post()
+  createUser(@Body() userdto: CreateUserDto): UserResponseDto {
+      const newUser =  this.userService.createUser(userdto);
+      return  new UserResponseDto(newUser);
+  } 
 
   // user.controller.ts
-  @Put(':id') updateUser(@Param('id') id: number, @Body() updateDto: CreateUserDto,): User | { message: string } {
-    return this.userService.updateUser(Number(id), updateDto);
+  @Put(':id') updateUser(@Param('id') id: number, @Body() updateDto: CreateUserDto,): UserResponseDto | { message: string } {
+    const updateUser = this.userService.updateUser(Number(id), updateDto);
+    return new UserResponseDto(updateUser);
   }
-  @Patch(':id') partiallyupdateUser(@Param('id') id: Number, @Body() updateDto:Partial<UpdateUserDto>): User | { message: String } {
-    return this.userService.partiallyupdateUser(Number(id), updateDto);
+  @Patch(':id') partiallyupdateUser(@Param('id') id: Number, @Body() updateDto:Partial<UpdateUserDto>): UserResponseDto | { message: String } {
+    const partialUpdate = this.userService.partiallyupdateUser(Number(id), updateDto);
+    return new UserResponseDto(partialUpdate)
   }
   @Delete(':id') deleteUser(@Param('id') id: Number | { message: String } ){
-    return this.userService.deleteUser(Number(id));
+    const deleteUser = this.userService.deleteUser(Number(id));
+    return new UserResponseDto(deleteUser)
   }
 
 
